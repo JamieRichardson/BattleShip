@@ -2,57 +2,40 @@ import org.junit.Assert;
 
 public class OceanTest {
     private Ocean testOcean;
+    private BattleCruiser battleCruiser;
 
     @org.junit.Before
     public void setUp() throws Exception {
         testOcean = new Ocean();
-        BattleCruiser battleCruiser = new BattleCruiser();
-        LightCruiser lightCruiser = new LightCruiser();
-        Submarine submarine = new Submarine();
-
-//        testOcean.ships[3][2] = battleCruiser;
-//        testOcean.ships[3][3] = battleCruiser;
-//        testOcean.ships[3][4] = battleCruiser;
-//        testOcean.ships[3][5] = battleCruiser;
-//        testOcean.ships[3][6] = battleCruiser;
-//        testOcean.ships[3][7] = battleCruiser;
-//        testOcean.ships[3][8] = battleCruiser;
-//
-//        testOcean.ships[1][0] = lightCruiser;
-        //testOcean.ships[5][5] = submarine;
-        //testOcean.ships[19][19] = submarine;
-        //testOcean.ships[3][0] = new EmptySea();
+        battleCruiser = new BattleCruiser();
     }
 
     @org.junit.Test
     public void placeAllShipsRandomly() throws Exception {
-        testOcean.placeAllShipsRandomly();
-        Assert.assertEquals(20, testOcean.getShipArray().length);
     }
 
     @org.junit.Test
     public void isOccupied() throws Exception {
+        battleCruiser.placeShipAt(0, 0, true, testOcean);
         Assert.assertTrue("Spot was occupied but returned false", testOcean.isOccupied(0,0));
         Assert.assertFalse("Spot was not occupied but returned true", testOcean.isOccupied(3, 0));
     }
 
     @org.junit.Test
     public void shootAt() throws Exception {
-        //testOcean.placeAllShipsRandomly();
         Destroyer destroyer = new Destroyer();
         destroyer.placeShipAt(5, 17, false, testOcean);
-
         testOcean.shootAt(5, 17);
         testOcean.shootAt(6, 17);
         testOcean.shootAt(7, 17);
         testOcean.shootAt(8, 17);
-        //testOcean.print();
         Assert.assertTrue("Ship was shot, but didn't sink", destroyer.isSunk());
     }
 
     @org.junit.Test
     public void okayToPlaceShipAt() throws Exception {
-        BattleCruiser testCruiser = new BattleCruiser(); //length is 7
+        BattleCruiser testCruiser = new BattleCruiser();
+        testCruiser.placeShipAt(3, 2, true, testOcean);
         Assert.assertFalse("Ship was allowed to hang over the board vertically", testCruiser.okToPlaceShipAt(14, 0, false, testOcean)); //place that hangs over the board - vertically
         Assert.assertFalse("Ship was allowed to hang over the board horizontally", testCruiser.okToPlaceShipAt(0, 14, true, testOcean)); //place that hangs over the board - horizontally
         Assert.assertFalse("Ship was allowed to be placed in an occupied place", testCruiser.okToPlaceShipAt(3, 2, true, testOcean)); //place already occupied
@@ -70,7 +53,7 @@ public class OceanTest {
         Assert.assertFalse("Ship could not be placed somewhere in the middle horizontally", testCruiser.okToPlaceShipAt(10, 10, true, testOcean)); // place up to last row in last column - vertical
     }
 
-
+    @org.junit.Test
     public void getShotsFired() throws Exception {
         testOcean.shootAt(1, 1);
         Assert.assertEquals(1, testOcean.getShotsFired());
@@ -80,16 +63,26 @@ public class OceanTest {
 
     @org.junit.Test
     public void getHitCount() throws Exception {
+        battleCruiser.placeShipAt(0, 1, true, testOcean);
         testOcean.shootAt(0, 0);
+        Assert.assertEquals(0, testOcean.getHitCount());
+        testOcean.shootAt(0, 1);
         Assert.assertEquals(1, testOcean.getHitCount());
-        testOcean.shootAt(3, 0);
-        Assert.assertEquals(1, testOcean.getHitCount());
-        testOcean.shootAt(1, 0);
+        testOcean.shootAt(0, 2);
         Assert.assertEquals(2, testOcean.getHitCount());
     }
 
     @org.junit.Test
     public void getShipsSunk() throws Exception {
+        battleCruiser.placeShipAt(1, 1, true, testOcean);
+        testOcean.shootAt(1, 1);
+        testOcean.shootAt(1, 2);
+        testOcean.shootAt(1, 3);
+        testOcean.shootAt(1, 4);
+        testOcean.shootAt(1, 5);
+        testOcean.shootAt(1, 6);
+        testOcean.shootAt(1, 7);
+        Assert.assertEquals(1, testOcean.shipsSunk);
     }
 
     @org.junit.Test
