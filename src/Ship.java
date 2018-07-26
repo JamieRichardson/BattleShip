@@ -26,6 +26,10 @@ public abstract class Ship {
         this.length = length;
     }
 
+    int getLength() {
+        return this.length;
+    }
+
     boolean isHorizontal() {
         return horizontal;
     }
