@@ -10,7 +10,7 @@ public abstract class Ship {
         return bowRow;
     }
 
-    public void setBowRow(int bowRow) {
+    private void setBowRow(int bowRow) {
         this.bowRow = bowRow;
     }
 
@@ -18,12 +18,8 @@ public abstract class Ship {
         return bowColumn;
     }
 
-    public void setBowColumn(int bowColumn) {
+    private void setBowColumn(int bowColumn) {
         this.bowColumn = bowColumn;
-    }
-
-    public int getLength() {
-        return length;
     }
 
     void setLength(int length) {
@@ -34,17 +30,13 @@ public abstract class Ship {
         return horizontal;
     }
 
-    public void setHorizontal(boolean horizontal) {
+    private void setHorizontal(boolean horizontal) {
         this.horizontal = horizontal;
     }
 
     boolean[] getHit() {
         return hit;
     }
-
-    public void setHit(boolean[] hit) {
-        this.hit = hit;
-    } //polish branch test
 
     abstract String getShipType();
 
@@ -89,9 +81,9 @@ public abstract class Ship {
     }
 
     void placeShipAt(int row, int column, boolean horizontal, Ocean ocean) {
-        this.horizontal = horizontal;
-        this.bowRow = row;
-        this.bowColumn = column;
+        setHorizontal(horizontal);
+        setBowRow(row);
+        setBowColumn(column);
         if (horizontal) {
             for (int i = 0; i < length; i++) {
                 ocean.ships[row][column + i] = this;
@@ -108,7 +100,7 @@ public abstract class Ship {
      * If a part of the ship occupies the given row and column, and the ship hasn’t been sunk, marks that part of
      * the ship as ”hit” (in the hit array, 0 indicates the bow)
      *
-     * @param row integer for the row in the ocean grid to shoot at
+     * @param row    integer for the row in the ocean grid to shoot at
      * @param column integer for the column in the ocean grid to shoot at
      * @return return true if hit, otherwise return false.
      */
@@ -125,7 +117,7 @@ public abstract class Ship {
         } else {
             for (int i = getBowRow(); i < getBowRow() + length + 1; i++) { //added i < getBowRow()
                 if (i == row && column == getBowColumn() && !isSunk()) {
-                    this.hit[hitArrayCount] = true; //Use setHit() instead?
+                    this.hit[hitArrayCount] = true;
                     return true;
                 }
                 hitArrayCount++;

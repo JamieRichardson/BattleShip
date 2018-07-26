@@ -6,7 +6,7 @@ import java.util.Random;
 public class Ocean {
 
     Ship[][] ships = new Ship[20][20];
-    List<Ship> shipsToPlace = new ArrayList<>();
+    private List<Ship> shipsToPlace = new ArrayList<>();
     int shotsFired;
     private int hitCount = 0;
     int shipsSunk = 0;
@@ -122,22 +122,6 @@ public class Ocean {
                         System.out.print(" " + "." + " ");
                     }
                 }
-            }
-            System.out.println();
-        }
-    }
-
-    public void testPrint() {
-        System.out.print("    0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19");
-        System.out.println();
-        for (int r = 0; r < ships.length; r++) {
-            if (r < 10) {
-                System.out.print(" " + r + " ");
-            } else {
-                System.out.print(r + " ");
-            }
-            for (int c = 0; c < ships.length; c++) {
-                System.out.print(" " + ships[r][c].toString() + " ");
             }
             System.out.println();
         }
