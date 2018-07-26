@@ -44,7 +44,7 @@ public abstract class Ship {
 
     public void setHit(boolean[] hit) {
         this.hit = hit;
-    }
+    } //polish branch test
 
     abstract String getShipType();
 
