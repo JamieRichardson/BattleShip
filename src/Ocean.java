@@ -90,7 +90,7 @@ public class Ocean {
         return this.hitCount;
     }
 
-    private int getShipsSunk() {
+    int getShipsSunk() {
         return this.shipsSunk;
     }
 
